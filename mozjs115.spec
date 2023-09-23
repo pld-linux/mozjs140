@@ -2,29 +2,28 @@
 # Conditional build:
 %bcond_without	tests	# tests build
 
-Summary:	SpiderMonkey 102 - JavaScript implementation
-Summary(pl.UTF-8):	SpiderMonkey 102 - implementacja języka JavaScript
-Name:		mozjs102
-Version:	102.13.0
+Summary:	SpiderMonkey 115 - JavaScript implementation
+Summary(pl.UTF-8):	SpiderMonkey 115 - implementacja języka JavaScript
+Name:		mozjs115
+Version:	115.2.1
 Release:	1
 License:	MPL v2.0
 Group:		Libraries
 #Source0:	https://download.gnome.org/teams/releng/tarballs-needing-help/mozjs/mozjs-%{version}.tar.xz
 Source0:	https://ftp.mozilla.org/pub/firefox/releases/%{version}esr/source/firefox-%{version}esr.source.tar.xz
-# Source0-md5:	42b9a73626ed8281b86222f6f0a96c73
+# Source0-md5:	c8deec3a0e558a1882f11bbea2fbd462
 Patch0:		copy-headers.patch
-Patch1:		system-virtualenv.patch
-Patch2:		include-configure-script.patch
-Patch3:		x32.patch
-Patch4:		mozjs-x32-rust.patch
-Patch5:		glibc-double.patch
+Patch1:		include-configure-script.patch
+Patch2:		x32.patch
+Patch3:		mozjs-x32-rust.patch
+Patch4:		glibc-double.patch
 URL:		https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey
 BuildRequires:	autoconf2_13 >= 2.13
 BuildRequires:	cargo
 # "TestWrappingOperations.cpp:27:1: error: non-constant condition for static assertion" with -fwrapv on gcc 6 and 7
-%{?with_tests:BuildRequires:	gcc-c++ >= 6:8}
-BuildRequires:	libicu-devel >= 67.1
-BuildRequires:	libstdc++-devel >= 6:7
+%{?with_tests:BuildRequires:	gcc-c++ >= 6:8.1}
+BuildRequires:	libicu-devel >= 73.1
+BuildRequires:	libstdc++-devel >= 6:8.1
 BuildRequires:	llvm
 BuildRequires:	m4 >= 1.1
 BuildRequires:	nspr-devel >= 4.32
@@ -35,8 +34,8 @@ BuildRequires:	python3-virtualenv >= 1.9.1-4
 BuildRequires:	readline-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.294
-BuildRequires:	rust >= 1.51.0
-BuildRequires:	rust-cbindgen >= 0.23.0
+BuildRequires:	rust >= 1.66.0
+BuildRequires:	rust-cbindgen >= 0.24.3
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	zlib-devel >= 1.2.3
@@ -64,7 +63,7 @@ Summary:	Header files for JavaScript reference library
 Summary(pl.UTF-8):	Pliki nagłówkowe do biblioteki JavaScript
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	libstdc++-devel
+Requires:	libstdc++-devel >= 6:8.1
 Requires:	nspr-devel >= 4.32
 
 %description devel
@@ -78,22 +77,24 @@ Pliki nagłówkowe do biblioteki JavaScript.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %ifarch x32
-%patch4 -p1
+%patch3 -p1
 %endif
-%patch5 -p1
+%patch4 -p1
 
 %build
 export PYTHON="%{__python}"
 export AUTOCONF="%{_bindir}/autoconf2_13"
 export SHELL="/bin/sh"
 cd js/src
+%if 0
+# currently rebuild not needed
 AC_MACRODIR=$(pwd)/../../build/autoconf \
 AWK=awk \
 M4=m4 \
-sh ../../build/autoconf/autoconf.sh --localdir=$(pwd) configure.in >configure
-chmod 755 configure
+sh ../../build/autoconf/autoconf.sh --localdir=$(pwd) old-configure.in >old-configure
+chmod 755 old-configure
+%endif
 mkdir -p obj
 cd obj
 
@@ -137,11 +138,11 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc js/src/README.html
-%attr(755,root,root) %{_bindir}/js102
-%attr(755,root,root) %{_libdir}/libmozjs-102.so
+%attr(755,root,root) %{_bindir}/js115
+%attr(755,root,root) %{_libdir}/libmozjs-115.so
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/js102-config
-%{_includedir}/mozjs-102
-%{_pkgconfigdir}/mozjs-102.pc
+%attr(755,root,root) %{_bindir}/js115-config
+%{_includedir}/mozjs-115
+%{_pkgconfigdir}/mozjs-115.pc
