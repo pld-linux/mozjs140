@@ -128,3 +128,14 @@
          cpu_arch == "arm" and int(buildconfig.substs["ARM_ARCH"]) >= 7
      ):
          contents += "#define JS_HAVE_GENERATED_ATOMIC_OPS 1"
+--- firefox-115.2.1/mozglue/misc/moz.build.orig	2023-09-12 06:32:32.000000000 +0200
++++ firefox-115.2.1/mozglue/misc/moz.build	2023-09-23 16:32:11.054352318 +0200
+@@ -51,7 +51,7 @@ SOURCES += [
+     "Uptime.cpp",
+ ]
+ 
+-if CONFIG["CPU_ARCH"].startswith("x86"):
++if CONFIG["CPU_ARCH"].startswith("x86") or CONFIG["CPU_ARCH"].startswith("x32"):
+     SOURCES += [
+         "SIMD_avx2.cpp",
+         "SSE.cpp",
