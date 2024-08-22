@@ -2,16 +2,16 @@
 # Conditional build:
 %bcond_without	tests	# tests build
 
-Summary:	SpiderMonkey 115 - JavaScript implementation
-Summary(pl.UTF-8):	SpiderMonkey 115 - implementacja języka JavaScript
-Name:		mozjs115
-Version:	115.2.1
+Summary:	SpiderMonkey 128 - JavaScript implementation
+Summary(pl.UTF-8):	SpiderMonkey 128 - implementacja języka JavaScript
+Name:		mozjs128
+Version:	128.1.0
 Release:	1
 License:	MPL v2.0
 Group:		Libraries
 #Source0:	https://download.gnome.org/teams/releng/tarballs-needing-help/mozjs/mozjs-%{version}.tar.xz
 Source0:	https://ftp.mozilla.org/pub/firefox/releases/%{version}esr/source/firefox-%{version}esr.source.tar.xz
-# Source0-md5:	c8deec3a0e558a1882f11bbea2fbd462
+# Source0-md5:	efbf349f0b7442fc6f2995bef4d32785
 Patch0:		copy-headers.patch
 Patch1:		include-configure-script.patch
 Patch2:		x32.patch
@@ -34,8 +34,8 @@ BuildRequires:	python3-virtualenv >= 1.9.1-4
 BuildRequires:	readline-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.294
-BuildRequires:	rust >= 1.66.0
-BuildRequires:	rust-cbindgen >= 0.24.3
+BuildRequires:	rust >= 1.76.0
+BuildRequires:	rust-cbindgen >= 0.26.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	zlib-devel >= 1.2.3
@@ -138,11 +138,11 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc js/src/README.html
-%attr(755,root,root) %{_bindir}/js115
-%attr(755,root,root) %{_libdir}/libmozjs-115.so
+%attr(755,root,root) %{_bindir}/js128
+%attr(755,root,root) %{_libdir}/libmozjs-128.so
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/js115-config
-%{_includedir}/mozjs-115
-%{_pkgconfigdir}/mozjs-115.pc
+%attr(755,root,root) %{_bindir}/js128-config
+%{_includedir}/mozjs-128
+%{_pkgconfigdir}/mozjs-128.pc
