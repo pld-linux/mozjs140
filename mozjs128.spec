@@ -5,13 +5,13 @@
 Summary:	SpiderMonkey 128 - JavaScript implementation
 Summary(pl.UTF-8):	SpiderMonkey 128 - implementacja języka JavaScript
 Name:		mozjs128
-Version:	128.1.0
+Version:	128.6.0
 Release:	1
 License:	MPL v2.0
 Group:		Libraries
 #Source0:	https://download.gnome.org/teams/releng/tarballs-needing-help/mozjs/mozjs-%{version}.tar.xz
 Source0:	https://ftp.mozilla.org/pub/firefox/releases/%{version}esr/source/firefox-%{version}esr.source.tar.xz
-# Source0-md5:	efbf349f0b7442fc6f2995bef4d32785
+# Source0-md5:	4e4caf3470c2c922f9463fab97232d12
 Patch0:		copy-headers.patch
 Patch1:		include-configure-script.patch
 Patch2:		x32.patch
