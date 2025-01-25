@@ -17,6 +17,7 @@ Patch1:		include-configure-script.patch
 Patch2:		x32.patch
 Patch3:		mozjs-x32-rust.patch
 Patch4:		glibc-double.patch
+Patch5:		icu76.patch
 URL:		https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey
 BuildRequires:	autoconf2_13 >= 2.13
 BuildRequires:	cargo
@@ -74,13 +75,14 @@ Pliki nagłówkowe do biblioteki JavaScript.
 
 %prep
 %setup -q -n firefox-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
 %ifarch x32
-%patch3 -p1
+%patch -P3 -p1
 %endif
-%patch4 -p1
+%patch -P4 -p1
+%patch -P5 -p1
 
 %build
 export PYTHON="%{__python}"
