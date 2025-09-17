@@ -2,28 +2,27 @@
 # Conditional build:
 %bcond_without	tests	# tests build
 
-Summary:	SpiderMonkey 128 - JavaScript implementation
-Summary(pl.UTF-8):	SpiderMonkey 128 - implementacja języka JavaScript
-Name:		mozjs128
-Version:	128.6.0
+Summary:	SpiderMonkey 140 - JavaScript implementation
+Summary(pl.UTF-8):	SpiderMonkey 140 - implementacja języka JavaScript
+Name:		mozjs140
+Version:	140.3.0
 Release:	1
 License:	MPL v2.0
 Group:		Libraries
 #Source0:	https://download.gnome.org/teams/releng/tarballs-needing-help/mozjs/mozjs-%{version}.tar.xz
 Source0:	https://ftp.mozilla.org/pub/firefox/releases/%{version}esr/source/firefox-%{version}esr.source.tar.xz
-# Source0-md5:	4e4caf3470c2c922f9463fab97232d12
+# Source0-md5:	ba93a89023a8c4d7ade167905783d875
 Patch0:		copy-headers.patch
 Patch1:		include-configure-script.patch
 Patch2:		x32.patch
 Patch3:		mozjs-x32-rust.patch
 Patch4:		glibc-double.patch
-Patch5:		icu76.patch
 URL:		https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey
 BuildRequires:	autoconf2_13 >= 2.13
 BuildRequires:	cargo
 # "TestWrappingOperations.cpp:27:1: error: non-constant condition for static assertion" with -fwrapv on gcc 6 and 7
 %{?with_tests:BuildRequires:	gcc-c++ >= 6:8.1}
-BuildRequires:	libicu-devel >= 73.1
+BuildRequires:	libicu-devel >= 76.1
 BuildRequires:	libstdc++-devel >= 6:8.1
 BuildRequires:	llvm
 BuildRequires:	m4 >= 1.1
@@ -35,8 +34,8 @@ BuildRequires:	python3-virtualenv >= 1.9.1-4
 BuildRequires:	readline-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.294
-BuildRequires:	rust >= 1.76.0
-BuildRequires:	rust-cbindgen >= 0.26.0
+BuildRequires:	rust >= 1.82.0
+BuildRequires:	rust-cbindgen >= 0.27.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	zlib-devel >= 1.2.3
@@ -44,6 +43,9 @@ Requires:	nspr >= 4.32
 Requires:	zlib >= 1.2.3
 ExclusiveArch:	%{x8664} %{ix86} x32 aarch64 armv6hl armv7hl armv7hnl
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+# firefox handles warnings on its own, using -Wno-format on selected sources, which cause -Werror=format-security to bail out
+%define		filterout_cxx	-Wformat -Werror=format-security
 
 %description
 JavaScript Reference Implementation (codename SpiderMonkey). The
@@ -82,7 +84,6 @@ Pliki nagłówkowe do biblioteki JavaScript.
 %patch -P3 -p1
 %endif
 %patch -P4 -p1
-%patch -P5 -p1
 
 %build
 export PYTHON="%{__python}"
@@ -140,11 +141,11 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc js/src/README.html
-%attr(755,root,root) %{_bindir}/js128
-%attr(755,root,root) %{_libdir}/libmozjs-128.so
+%attr(755,root,root) %{_bindir}/js140
+%attr(755,root,root) %{_libdir}/libmozjs-140.so
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/js128-config
-%{_includedir}/mozjs-128
-%{_pkgconfigdir}/mozjs-128.pc
+%attr(755,root,root) %{_bindir}/js140-config
+%{_includedir}/mozjs-140
+%{_pkgconfigdir}/mozjs-140.pc
