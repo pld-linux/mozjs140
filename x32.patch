@@ -110,6 +110,15 @@
          # The `add` operation can be optimized with XADD.
          if op == "add":
              insns = ""
+@@ -629,7 +629,7 @@ def gen_fetchop(fun_name, cpp_type, size
+ 
+ 
+ def gen_pause(fun_name):
+-    if cpu_arch in ("x86", "x86_64"):
++    if cpu_arch in ("x86", "x86_64", "x32"):
+         return r"""
+             INLINE_ATTR void %(fun_name)s() {
+                 asm volatile ("pause" :::);
 @@ -635,7 +635,7 @@ def gen_copy(fun_name, cpp_type, size, u
          offset = unroll - 1
      insns = ""
