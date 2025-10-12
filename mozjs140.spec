@@ -33,12 +33,13 @@ BuildRequires:	python3 >= 1:3.8.5-3
 BuildRequires:	python3-virtualenv >= 1.9.1-4
 BuildRequires:	readline-devel
 BuildRequires:	rpm-perlprov
-BuildRequires:	rpmbuild(macros) >= 1.294
+BuildRequires:	rpmbuild(macros) >= 2.050
 BuildRequires:	rust >= 1.82.0
 BuildRequires:	rust-cbindgen >= 0.27.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	zlib-devel >= 1.2.3
+%{?rust_req}
 Requires:	nspr >= 4.32
 Requires:	zlib >= 1.2.3
 ExclusiveArch:	%{x8664} %{ix86} x32 aarch64 armv6hl armv7hl armv7hnl
