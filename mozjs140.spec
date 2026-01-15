@@ -5,13 +5,13 @@
 Summary:	SpiderMonkey 140 - JavaScript implementation
 Summary(pl.UTF-8):	SpiderMonkey 140 - implementacja języka JavaScript
 Name:		mozjs140
-Version:	140.3.0
+Version:	140.7.0
 Release:	1
 License:	MPL v2.0
 Group:		Libraries
 #Source0:	https://download.gnome.org/teams/releng/tarballs-needing-help/mozjs/mozjs-%{version}.tar.xz
 Source0:	https://ftp.mozilla.org/pub/firefox/releases/%{version}esr/source/firefox-%{version}esr.source.tar.xz
-# Source0-md5:	ba93a89023a8c4d7ade167905783d875
+# Source0-md5:	e91d94276f11be446eda0e7691ec3a31
 Patch0:		copy-headers.patch
 Patch1:		include-configure-script.patch
 Patch2:		x32.patch
